@@ -1,0 +1,4 @@
+live calls: POST /v1/oauth2/token -> 200, GET /v1/reporting/transactions -> 200
+mode=SANDBOX_LIVE txns=5 findings=2 proposals=2 audit=OK (ok records=7 head=cb3d31e10a471c55)
+  [HIGH  ] VELOCITY_BURST           ref=ORD-2004 :: The finding indicates that 4 payments from a single payer occurred within 10 minutes, which could be indicativ
+  [MEDIUM] AMOUNT_MISMATCH          ref=ORD-2002 :: The finding indicates that PayPal recorded an amount of 85.00, while the ledger expected 80.00, resulting in a

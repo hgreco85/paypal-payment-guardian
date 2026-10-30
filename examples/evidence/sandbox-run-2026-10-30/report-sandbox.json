@@ -1,0 +1,74 @@
+{
+  "mode": "SANDBOX_LIVE",
+  "txn_count": 5,
+  "findings": [
+    {
+      "code": "VELOCITY_BURST",
+      "severity": "HIGH",
+      "score": 80,
+      "txn_ids": [
+        "3LR498133B080220K",
+        "4NS49385VD756462Y",
+        "65G514356C421233T",
+        "8GL23147BR176773V"
+      ],
+      "reference": "ORD-2004",
+      "detail": {
+        "payer_key": "NE8A***",
+        "count": 4,
+        "window_minutes": 10
+      },
+      "explanation": {
+        "text": "The finding indicates that 4 payments from a single payer occurred within 10 minutes, which could be indicative of card testing or scripted abuse. To verify, check if there are any patterns or anomalies in the payment history for this payer.",
+        "source": "ollama:qwen2.5:1.5b",
+        "fallback_reason": null
+      }
+    },
+    {
+      "code": "AMOUNT_MISMATCH",
+      "severity": "MEDIUM",
+      "score": 55,
+      "txn_ids": [
+        "65G514356C421233T"
+      ],
+      "reference": "ORD-2002",
+      "detail": {
+        "paypal": "85.00",
+        "expected": "80.00",
+        "difference": "5.00"
+      },
+      "explanation": {
+        "text": "The finding indicates that PayPal recorded an amount of 85.00, while the ledger expected 80.00, resulting in a difference of 5.00. This discrepancy could suggest tampering, partial payment, or a pricing bug. To investigate, check the transaction history, review the ledger entries, and verify the payment details.",
+        "source": "ollama:qwen2.5:1.5b",
+        "fallback_reason": null
+      }
+    }
+  ],
+  "proposals": [
+    {
+      "proposal_id": "9b36c6433a26",
+      "action": "HOLD_FOR_REVIEW",
+      "finding_code": "VELOCITY_BURST",
+      "reference": "ORD-2004",
+      "severity": "HIGH",
+      "status": "APPROVED",
+      "decided_by": "human:reviewer",
+      "reason": "demo approval",
+      "executed_simulated": true
+    },
+    {
+      "proposal_id": "c6855b50de46",
+      "action": "FLAG_FOR_FOLLOWUP",
+      "finding_code": "AMOUNT_MISMATCH",
+      "reference": "ORD-2002",
+      "severity": "MEDIUM",
+      "status": "PENDING",
+      "decided_by": null,
+      "reason": null,
+      "executed_simulated": false
+    }
+  ],
+  "audit_path": "/workspace/paypal-guardian-video/raw/out/audit-sandbox.jsonl",
+  "audit_ok": true,
+  "audit_msg": "ok records=7 head=cb3d31e10a471c55"
+}

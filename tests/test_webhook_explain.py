@@ -58,10 +58,17 @@ class Explain(unittest.TestCase):
     def test_busy_slot_falls_back_without_generate_call(self):
         calls = []
         def http(url, body):
-            calls.append(url); return json.dumps({"models": [{"name": "qwen3.5:4b"}]}).encode()
+            calls.append(url); return json.dumps({"models": [{"name": "other-job-model:7b"}]}).encode()
         r = Explainer(mode="ollama", http=http).explain(F)
         self.assertEqual(r["fallback_reason"], "resource_busy_or_unreachable")
         self.assertTrue(all(u.endswith("/api/ps") for u in calls))
+
+    def test_own_model_resident_still_uses_llm(self):
+        def http(url, body):
+            if url.endswith("/api/ps"): return json.dumps({"models": [{"name": "qwen3.5:4b"}]}).encode()
+            return json.dumps({"response": "The capture is 9.00 below the order total; check for partial payment."}).encode()
+        e = Explainer(mode="ollama", model="qwen3.5:4b", http=http); r = e.explain(F)
+        self.assertTrue(r["source"].startswith("ollama:")); self.assertEqual(e.llm_calls, 1)
 
     def test_idle_slot_uses_llm_mocked(self):
         def http(url, body):

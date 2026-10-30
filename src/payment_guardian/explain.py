@@ -1,6 +1,6 @@
 """AI explanations for findings.
 
-Order of preference (all $0): local Ollama (Qwen) -> deterministic template.
+Order of preference (all $0): local Ollama model (e.g. Qwen2.5) -> deterministic template.
 The local model is only used when the single local inference slot is idle
 (`/api/ps` reports no loaded model) and PG_LLM=ollama is set, so Payment
 Guardian never competes with another job for the slot. The LLM can only
@@ -62,7 +62,9 @@ class Explainer:
             ps = json.loads(self._http(self.host + "/api/ps", None).decode())
         except Exception:  # noqa: BLE001
             return False
-        return not ps.get("models")
+        loaded = [m.get("name") or m.get("model") for m in ps.get("models") or []]
+        # idle = nothing loaded, or only our own model is resident (kept warm between findings)
+        return all(name == self.model for name in loaded)
 
     def explain(self, f: Finding) -> Dict[str, Any]:
         base = deterministic_explanation(f)

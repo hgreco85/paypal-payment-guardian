@@ -26,7 +26,7 @@ currency mix-ups, refunds larger than the sale, card-testing bursts. Finance tea
 ```bash
 git clone <this repo URL> && cd paypal-payment-guardian
 bash scripts/demo.sh                   # synthetic + local mock + audit verify + tamper test
-python3 -m unittest discover -s tests  # 35 offline tests
+python3 -m unittest discover -s tests  # 36 offline tests (1 live test skipped without creds)
 open out/report-synthetic.html         # visual report
 ```
 
@@ -41,7 +41,7 @@ open out/report-synthetic.html         # visual report
    ```
 
 ## Evidence (Sandbox vs synthetic vs deterministic)
-Real PayPal **Sandbox** runs (OAuth 200, Transaction Search 200 with 6 transactions, 4 captures, a partial refund, AMOUNT_MISMATCH and VELOCITY_BURST findings, audit chain OK) are documented in [`docs/EVIDENCE.md`](docs/EVIDENCE.md). Offline tests and the default demo use **synthetic** data. Explanations in the demo are **deterministic templates** (the optional local LLM was not used for the evidence).
+Real PayPal **Sandbox** runs (OAuth 200, Transaction Search 200 with 6 transactions, 4 captures, a partial refund, AMOUNT_MISMATCH and VELOCITY_BURST findings, audit chain OK) are documented in [`docs/EVIDENCE.md`](docs/EVIDENCE.md). Offline tests and the default demo use **synthetic** data. The 2026-10-30 Sandbox run used a **real local LLM** (Qwen2.5-1.5B via Ollama) for explanations; earlier runs and offline tests use the **deterministic template fallback**, and every explanation is labelled with its `source`.
 
 ## Honest labelling of data sources
 Every report carries its `mode`: `SANDBOX_LIVE` (real sandbox API), `MOCK_HTTP` (a local fake of the PayPal endpoints
@@ -49,8 +49,8 @@ used to exercise the real HTTP code path offline - **not PayPal**), or `SYNTHETI
 
 ## Enable local AI explanations
 ```bash
-ollama pull qwen3.5:4b
-PG_LLM=ollama PG_LLM_MODEL=qwen3.5:4b PYTHONPATH=src python3 -m payment_guardian demo --mode synthetic
+ollama pull qwen2.5:1.5b   # any small local model works
+PG_LLM=ollama PG_LLM_MODEL=qwen2.5:1.5b PYTHONPATH=src python3 -m payment_guardian demo --mode synthetic
 ```
 The explainer only talks to loopback, checks `/api/ps` first and falls back to templates if the model slot is busy.
 
