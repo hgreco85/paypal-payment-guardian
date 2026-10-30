@@ -13,4 +13,5 @@ Every step is recorded in a tamper-evident hash-chained audit log. USD 0 increme
 
 ## Evidence status
 See `docs/EVIDENCE.md`: PayPal Sandbox calls (OAuth, Transaction Search, Orders/Payments) were executed against the real
-Sandbox on 2026-10-27; offline tests use synthetic data and a local mock; explanations shown in the demo are deterministic templates.
+Sandbox on 2026-10-27 and 2026-10-30; offline tests use synthetic data and a local mock.
+AI explanations: the 2026-10-30 Sandbox run (`examples/evidence/sandbox-run-2026-10-30/report-sandbox.json`) used a real local model, `ollama:qwen2.5:1.5b`, for the two explained findings (`source` and `fallback_reason` recorded per finding). The 2026-10-27 runs used the deterministic template fallback. Reproduce with `ollama pull qwen2.5:1.5b` and `PG_LLM=ollama PG_LLM_MODEL=qwen2.5:1.5b`; the code default model is `qwen3.5:4b` only when `PG_LLM_MODEL` is unset.
