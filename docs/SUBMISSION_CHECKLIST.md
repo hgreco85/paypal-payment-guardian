@@ -1,0 +1,11 @@
+# Devpost submission checklist (do not submit without owner approval)
+- [ ] Public repo (GitHub) with detectable MIT `LICENSE` in the About section
+- [ ] README: install/run steps judges can follow; credentials instructions for sandbox
+- [ ] Project built with PayPal developer platform (Sandbox) - live sandbox run recorded
+- [ ] AI tool/model described (local Ollama/Qwen + deterministic fallback)
+- [ ] Text description: features, how it was built, challenges, what's next; explain "newly created during Submission Period"
+- [ ] Demo video < 3:00, public on YouTube, shows project running, no third-party trademarks/copyrighted music
+- [ ] Sanitiser passes: `python scripts/sanitize_check.py <repo>`
+- [ ] No secrets in git history of the public repo (fresh repo, single squashed commit)
+- [ ] English for all materials
+- [ ] Deadline: Thu 2026-11-12 12:00 PT (= 17:00 ART)

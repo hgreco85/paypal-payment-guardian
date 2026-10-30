@@ -1,0 +1,14 @@
+[project]
+name = "payment-guardian"
+version = "0.1.0"
+description = "PayPal Sandbox reconciliation, anomaly detection and human-approved actions with a tamper-evident audit log"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = []   # stdlib only
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]

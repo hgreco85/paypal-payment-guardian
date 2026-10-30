@@ -1,0 +1,4 @@
+[
+  {"order_ref": "ORD-1001", "expected_amount": "49.90", "currency": "USD", "payer": "payer-a", "created": "2026-10-05T12:00:00+00:00"},
+  {"order_ref": "ORD-1002", "expected_amount": "120.00", "currency": "USD", "payer": "payer-b", "created": "2026-10-06T09:30:00+00:00"}
+]
